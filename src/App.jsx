@@ -1,9 +1,14 @@
+import { Header } from "./components/Header"
+import { PresupuestoContextProvider } from "./context/PresupuestoContext"
+
 function App() {
 
   return (
-    <div className="App">
-      
-    </div>
+      <div>
+        <PresupuestoContextProvider>
+            <Header />
+        </PresupuestoContextProvider>
+      </div>
   )
 }
 
