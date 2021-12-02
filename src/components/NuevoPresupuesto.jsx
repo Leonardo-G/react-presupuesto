@@ -3,18 +3,19 @@ import { PresupuestoContext } from '../context/PresupuestoContext'
 import { Mensaje } from './Mensaje'
 
 export const NuevoPresupuesto = () => {
-    const { presupuesto, setPresupuesto } = useContext(PresupuestoContext)
+    const { presupuesto, setPresupuesto, setIsValidPresupuesto } = useContext(PresupuestoContext)
     const [mensaje, setMensaje] = useState("")
 
     const handlePresupuesto = (e) => {
         e.preventDefault();
 
         if(presupuesto === "" || presupuesto <= 0 || isNaN(Number(presupuesto)) ){
-            setMensaje("coloque un presupuesto válido")
-        }else{
-            console.log("Si es un presupuesto válido")
+            setMensaje("coloque un presupuesto válido");
+            return;
         }
 
+        setMensaje("");
+        setIsValidPresupuesto(true);
     }
 
     return (
@@ -27,10 +28,10 @@ export const NuevoPresupuesto = () => {
                     <label>Definir Presupuesto</label>
                     <input
                         className="nuevo-presupuesto"
-                        type="text"
+                        type="number"
                         placeholder="Añade un presupuesto"
                         value={ presupuesto }
-                        onChange={ e => setPresupuesto(e.target.value) }
+                        onChange={ e => setPresupuesto(Number(e.target.value)) }
                     />
                     <input
                         type="submit"
