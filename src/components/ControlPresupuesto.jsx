@@ -3,7 +3,7 @@ import { PresupuestoContext } from '../context/PresupuestoContext'
 
 export const ControlPresupuesto = () => {
 
-    const { presupuesto } = useContext( PresupuestoContext )
+    const { presupuesto } = useContext( PresupuestoContext );
 
     const formatearCantidad = ( cantidad ) => {
         return cantidad.toLocaleString("en-US", {
