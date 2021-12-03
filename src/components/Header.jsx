@@ -5,7 +5,7 @@ import { NuevoPresupuesto } from './NuevoPresupuesto'
 
 export const Header = () => {
 
-    const { isValidPresupuesto } = useContext( PresupuestoContext );
+    const { isValidPresupuesto, gastos } = useContext( PresupuestoContext );
 
 
     return (
