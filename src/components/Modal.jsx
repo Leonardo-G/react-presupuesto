@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { PresupuestoContext } from '../context/PresupuestoContext';
 import CerrarBtn from "../img/cerrar.svg";
 import { Mensaje } from './Mensaje';
 
-export const Modal = ({ setModal, animarModal, setAnimarModal }) => {
+export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) => {
 
     const { setGastos } = useContext( PresupuestoContext )
     const [mensaje, setMensaje] = useState("");
@@ -14,6 +14,16 @@ export const Modal = ({ setModal, animarModal, setAnimarModal }) => {
         categoria: ""
     })
     const { nombre, cantidad, categoria } = camposFormulario;
+
+    useEffect(() => {
+        if(Object.keys(editarGasto).length > 0){
+            setCamposFormulario({
+                nombre: editarGasto.nombre,
+                cantidad: editarGasto.cantidad,
+                categoria: editarGasto.categoria
+            })
+        }
+    }, [])
 
     const handleCerrarModal = () => {
         setAnimarModal(false);

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 
 export const PresupuestoContext = createContext();
 
@@ -8,7 +8,6 @@ export const PresupuestoContextProvider = ({children}) => {
     const [isValidPresupuesto, setIsValidPresupuesto] = useState(false)
     const [gastos, setGastos] = useState([]);
 
-
     return (
         <PresupuestoContext.Provider
             value={{
@@ -17,7 +16,7 @@ export const PresupuestoContextProvider = ({children}) => {
                 isValidPresupuesto,
                 setIsValidPresupuesto,
                 gastos,
-                setGastos
+                setGastos,
             }}
         >
             { children }

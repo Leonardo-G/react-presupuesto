@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { LeadingActions, SwipeableList, SwipeableListItem, SwipeAction, TrailingActions } from "react-swipeable-list";
 import 'react-swipeable-list/dist/styles.css';
+import { PresupuestoContext } from '../context/PresupuestoContext';
 import { iconoGasto } from '../helpers';
 
-export const Gasto = ({ id, categoria, nombre, cantidad, fecha }) => {
+export const Gasto = ({ setEditarGasto, ...gasto }) => {
+    const { id, categoria, nombre, cantidad, fecha } = gasto
 
     const leadingActions = () => {
         return <LeadingActions>
-                    <SwipeAction onClick={() => console.log("Editar..")}>
+                    <SwipeAction onClick={() => setEditarGasto(gasto)}>
                         Editar
                     </SwipeAction>
                </LeadingActions>
