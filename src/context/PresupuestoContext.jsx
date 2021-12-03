@@ -6,7 +6,7 @@ export const PresupuestoContextProvider = ({children}) => {
 
     const [presupuesto, setPresupuesto] = useState(0);
     const [isValidPresupuesto, setIsValidPresupuesto] = useState(false)
-    const [gasto, setGasto] = useState([]);
+    const [gastos, setGastos] = useState([]);
 
 
     return (
@@ -16,7 +16,8 @@ export const PresupuestoContextProvider = ({children}) => {
                 setPresupuesto,
                 isValidPresupuesto,
                 setIsValidPresupuesto,
-                setGasto
+                gastos,
+                setGastos
             }}
         >
             { children }

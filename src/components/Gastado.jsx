@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { PresupuestoContext } from '../context/PresupuestoContext';
 import IconoNuevoGasto from "../img/nuevo-gasto.svg";
+import { ListadoGastos } from './ListadoGastos';
 import { Modal } from './Modal';
 
 export const Gastado = () => {
 
-    const { isValidPresupuesto } = useContext( PresupuestoContext );
+    const { isValidPresupuesto, gastos } = useContext( PresupuestoContext );
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
 
@@ -20,6 +21,9 @@ export const Gastado = () => {
 
     return (
         <>
+            <main>
+                <ListadoGastos gastos={ gastos }/>
+            </main>
             <div className="nuevo-gasto">
                 <img 
                     src={ IconoNuevoGasto }

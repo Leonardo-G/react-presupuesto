@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { PresupuestoContext } from '../context/PresupuestoContext';
 import CerrarBtn from "../img/cerrar.svg";
 import { Mensaje } from './Mensaje';
 
 export const Modal = ({ setModal, animarModal, setAnimarModal }) => {
 
-    const { setGasto } = useContext( PresupuestoContext )
+    const { setGastos } = useContext( PresupuestoContext )
     const [mensaje, setMensaje] = useState("");
     const [camposFormulario, setCamposFormulario] = useState({
         nombre: "",
@@ -38,14 +39,30 @@ export const Modal = ({ setModal, animarModal, setAnimarModal }) => {
             return;
         }
         setMensaje("");
-        setGasto(gasto => [
-            ...gasto,
+
+        //Guarda el nuevo gasto
+        setGastos(gastos => [
+            ...gastos,
             {
+                id: uuidv4(),
+                fecha: new Date().toLocaleString("es-ES", {
+                    year: "numeric",
+                    month: "long",
+                    day: "2-digit"
+                }),
                 nombre,
                 cantidad,
                 categoria
             }
-        ])
+        ]);
+
+        //Desactivar modal
+        setAnimarModal(false);
+
+        setTimeout(() => {
+            
+            setModal(false);
+        }, 300);
     }
 
     return (
