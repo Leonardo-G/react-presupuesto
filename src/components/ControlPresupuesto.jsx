@@ -5,7 +5,7 @@ import { PresupuestoContext } from '../context/PresupuestoContext'
 
 export const ControlPresupuesto = () => {
 
-    const { presupuesto, gastos } = useContext( PresupuestoContext );
+    const { presupuesto, gastos, setGastos, setPresupuesto, setIsValidPresupuesto } = useContext( PresupuestoContext );
     const [disponible, setDisponible] = useState( 0 );
     const [gastado, setGastado] = useState(0)
     const [porcentaje, setPorcentaje] = useState(0)
@@ -34,24 +34,40 @@ export const ControlPresupuesto = () => {
         })
     }
 
+    const handleResetApp = () => {
+        const resultado = confirm("Deseas reiniciar presupuesto y gastos?")
+
+        if(resultado){
+            setGastos([]);
+            setPresupuesto(0);
+            setIsValidPresupuesto(false)
+        }
+    }
+
     return (
         <div className="contenedor-presupuesto contenedor sombra dos-columnas">
             <div>
                 <CircularProgressbar 
                     styles={buildStyles({
-                        pathColor: "#3b82f6",
-                        trailColor: "#F5F5F5",
+                        pathColor:  "#3b82f6",
+                        trailColor: Number(porcentaje) <= 0 ? "#dc2626dc" : "#f5f5f5",
                         pathTransitionDuration: 0.8,
+                        textColor: porcentaje <= 0 ? "#dc2626dc" : "#3b82f6"
                     })}
                     text={`${porcentaje} % Disp.`}
                     value={porcentaje}
                 />
             </div>
             <div className="contenido-presupuesto">
+                <button
+                    className="reset-app"
+                    type="button"
+                    onClick={ handleResetApp }
+                >Resetear App</button>
                 <p>
                     <span>Presupuesto: </span> { formatearCantidad(presupuesto) }
                 </p>
-                <p>
+                <p className={ `${disponible < 0 && "negativo" }`}>
                     <span>Disponible: </span> { formatearCantidad(disponible) }
                 </p>
                 <p>
