@@ -4,7 +4,7 @@ import 'react-swipeable-list/dist/styles.css';
 import { PresupuestoContext } from '../context/PresupuestoContext';
 import { iconoGasto } from '../helpers';
 
-export const Gasto = ({ setEditarGasto, ...gasto }) => {
+export const Gasto = ({ setEditarGasto, eliminarGasto, ...gasto }) => {
     const { id, categoria, nombre, cantidad, fecha } = gasto
 
     const leadingActions = () => {
@@ -17,7 +17,10 @@ export const Gasto = ({ setEditarGasto, ...gasto }) => {
 
     const trailingActions = () => {
         return <TrailingActions>
-                    <SwipeAction onClick={() => console.log("eliminar")}>
+                    <SwipeAction 
+                        onClick={() => eliminarGasto(id)}
+                        destructive={true}    
+                    >
                         Eliminar
                     </SwipeAction>
                </TrailingActions>

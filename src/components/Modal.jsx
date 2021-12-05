@@ -6,7 +6,7 @@ import { Mensaje } from './Mensaje';
 
 export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) => {
 
-    const { setGastos } = useContext( PresupuestoContext )
+    const { gastos, setGastos } = useContext( PresupuestoContext )
     const [mensaje, setMensaje] = useState("");
     const [camposFormulario, setCamposFormulario] = useState({
         nombre: "",
@@ -14,6 +14,7 @@ export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) =>
         categoria: ""
     })
     const { nombre, cantidad, categoria } = camposFormulario;
+    const [id, setId] = useState("")
 
     useEffect(() => {
         if(Object.keys(editarGasto).length > 0){
@@ -22,6 +23,7 @@ export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) =>
                 cantidad: editarGasto.cantidad,
                 categoria: editarGasto.categoria
             })
+            setId(editarGasto.id)
         }
     }, [])
 
@@ -50,22 +52,34 @@ export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) =>
         }
         setMensaje("");
 
-        //Guarda el nuevo gasto
-        setGastos(gastos => [
-            ...gastos,
-            {
-                id: uuidv4(),
-                fecha: new Date().toLocaleString("es-ES", {
-                    year: "numeric",
-                    month: "long",
-                    day: "2-digit"
-                }),
-                nombre,
-                cantidad,
-                categoria
-            }
-        ]);
+        const objGasto = {
+            fecha: new Date().toLocaleString("es-ES", {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+            }),
+            nombre,
+            cantidad,
+            categoria
+        }
 
+        //Comprobar si ya existe un gasto
+        const isExistGasto = gastos.some(gasto => gasto.id === id);
+        
+        if(isExistGasto){
+            // Actualizar gasto        
+            const gastoActualizar = gastos.filter(gasto => gasto.id !== id);
+            setGastos([
+                ...gastoActualizar, 
+                { id,...objGasto }
+            ])
+        }else{
+            //Guarda el nuevo gasto
+            setGastos(gastos => [
+                ...gastos,
+                {...objGasto, id: uuidv4()}
+            ]);
+        }
         //Desactivar modal
         setAnimarModal(false);
 
@@ -88,7 +102,7 @@ export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) =>
                 className={`formulario ${ animarModal ? "animar" : "cerrar"}`}
                 onSubmit={ handleSubmit }    
             >
-                <legend>Nuevo Gasto</legend>
+                <legend>{ editarGasto.nombre ? "Editar Gasto" : "Nuevo Gasto"}</legend>
                 {
                     mensaje && <Mensaje tipo="error">{ mensaje }</Mensaje>
                 }
@@ -133,7 +147,7 @@ export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) =>
                 </div>
                 <input 
                     type="submit"
-                    defaultValue="Añadir Gasto"
+                    value={ editarGasto.nombre ? "Editar Gasto" : "Añadir Gasto" }
                 />
             </form>
         </div>

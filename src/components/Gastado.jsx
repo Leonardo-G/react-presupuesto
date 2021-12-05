@@ -5,7 +5,7 @@ import { ListadoGastos } from './ListadoGastos';
 import { Modal } from './Modal';
 
 export const Gastado = () => {
-    const { gastos } = useContext( PresupuestoContext );
+    const { gastos, setGastos } = useContext( PresupuestoContext );
     
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
@@ -28,12 +28,17 @@ export const Gastado = () => {
             setAnimarModal(true);
         }, 300);
     }
+
+    const eliminarGasto = (id) => {
+        const actualGastos = gastos.filter( gasto => gasto.id !== id );
+        setGastos( actualGastos )
+    }
     
 
     return (
         <>
             <main>
-                <ListadoGastos gastos={ gastos } setEditarGasto={ setEditarGasto }/>
+                <ListadoGastos gastos={ gastos } setEditarGasto={ setEditarGasto } eliminarGasto={ eliminarGasto }/>
             </main>
             <div className="nuevo-gasto">
                 <img 
