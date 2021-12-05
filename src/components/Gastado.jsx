@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { PresupuestoContext } from '../context/PresupuestoContext';
 import IconoNuevoGasto from "../img/nuevo-gasto.svg";
+import { Filtros } from './Filtros';
 import { ListadoGastos } from './ListadoGastos';
 import { Modal } from './Modal';
 
@@ -9,7 +10,21 @@ export const Gastado = () => {
     
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
-    const [editarGasto, setEditarGasto] = useState({})
+    const [editarGasto, setEditarGasto] = useState({});
+
+    //Filtros
+    const [filtros, setFiltros] = useState("");
+    const [filtrosArray, setFiltrosArray] = useState([])
+
+    useEffect(() => {
+        if(filtros === ""){
+            setFiltrosArray(gastos);
+            return;
+        }
+        const filtroGasto = gastos.filter( gasto => gasto.categoria === filtros );
+        setFiltrosArray(filtroGasto);
+
+    }, [ filtros ])
     
     useEffect(() => {
         if(Object.keys(editarGasto).length > 0){
@@ -38,7 +53,8 @@ export const Gastado = () => {
     return (
         <>
             <main>
-                <ListadoGastos gastos={ gastos } setEditarGasto={ setEditarGasto } eliminarGasto={ eliminarGasto }/>
+                <Filtros filtros={ filtros } setFiltros={ setFiltros } />
+                <ListadoGastos filtrosArray={ filtrosArray } setEditarGasto={ setEditarGasto } eliminarGasto={ eliminarGasto }/>
             </main>
             <div className="nuevo-gasto">
                 <img 
