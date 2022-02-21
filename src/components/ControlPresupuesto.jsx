@@ -40,7 +40,7 @@ export const ControlPresupuesto = () => {
         if(resultado){
             setGastos([]);
             setPresupuesto(0);
-            setIsValidPresupuesto(false)
+            setIsValidPresupuesto(false);
         }
     }
 

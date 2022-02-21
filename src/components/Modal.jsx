@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+
 import { PresupuestoContext } from '../context/PresupuestoContext';
-import CerrarBtn from "../img/cerrar.svg";
 import { Mensaje } from './Mensaje';
+
+import CerrarBtn from "../img/cerrar.svg";
 
 export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) => {
 
@@ -65,7 +67,7 @@ export const Modal = ({ setModal, animarModal, setAnimarModal, editarGasto }) =>
 
         //Comprobar si ya existe un gasto
         const isExistGasto = gastos.some(gasto => gasto.id === id);
-        
+        console.log(isExistGasto)
         if(isExistGasto){
             // Actualizar gasto        
             const gastoActualizar = gastos.filter(gasto => gasto.id !== id);

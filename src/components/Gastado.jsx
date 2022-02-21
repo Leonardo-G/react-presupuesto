@@ -24,7 +24,7 @@ export const Gastado = () => {
         const filtroGasto = gastos.filter( gasto => gasto.categoria === filtros );
         setFiltrosArray(filtroGasto);
 
-    }, [ filtros ])
+    }, [ filtros, gastos ])
     
     useEffect(() => {
         if(Object.keys(editarGasto).length > 0){
